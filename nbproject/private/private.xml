@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/exception/InvalidInputException.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/exception/LibraryException.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/exception/MemberNotFoundException.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/validator/DataInputValidator.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/ui/MainUI.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/ui/BookMenu.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/ui/MemberMenu.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/exception/BookNotFoundException.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/ui/ReportMenu.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/service/ReportService.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/service/BorrowService.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/service/BookService.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/ui/BorrowMenu.java</file>
+            <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/service/MemberService.java</file>
+        </group>
+    </open-files>
+</project-private>
