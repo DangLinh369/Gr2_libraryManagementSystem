@@ -90,7 +90,9 @@ public class BorrowService {
         return null;
     }
 
-    private int countCurrentlyBorrowedByMember(String memberID) {
+    // public để MemberMenu kiểm tra BR3 (không xóa member còn nợ sách)
+    // và hiển thị cột "Borrowed" trong danh sách thành viên
+    public int countCurrentlyBorrowedByMember(String memberID) {
         int count = 0;
         for (BorrowingTransaction t : txs) {
             if (t.getReturnDate() == null && t.getMember().getMemberID().equalsIgnoreCase(memberID)) {

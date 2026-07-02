@@ -11,8 +11,8 @@ import java.time.format.DateTimeFormatter;
 public class BorrowingTransaction {
 
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    // BR7: số ngày mặc định trước khi quá hạn (due date = borrowDate + 7 ngày)
-    private static final int DEFAULT_BORROW_DAYS = 7;
+    // Kỳ hạn mượn: due date = borrowDate + 14 ngày (LOAN_DAYS = 14 theo report Lab 1/2)
+    private static final int DEFAULT_BORROW_DAYS = 14;
 
     private String transactionID;
     private Book book;
@@ -43,11 +43,13 @@ public class BorrowingTransaction {
     }
 
     /**
-     * Sách đang trễ hạn nếu chưa trả VÀ đã qua dueDate.
+     * Giao dịch có trễ hạn không? (theo report Lab 1/2)
+     * - Đã trả: so NGÀY TRẢ với hạn trả (trả muộn vẫn tính là overdue).
+     * - Chưa trả: so NGÀY HÔM NAY với hạn trả.
      */
     public boolean isOverdue() {
-        if (returnDate != null) return false; // đã trả thì không còn overdue
-        return LocalDate.now().isAfter(dueDate);
+        LocalDate checkDate = (returnDate != null) ? returnDate : LocalDate.now();
+        return checkDate.isAfter(dueDate);
     }
 
     /**

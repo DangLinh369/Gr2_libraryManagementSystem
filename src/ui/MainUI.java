@@ -15,14 +15,14 @@ import java.util.Scanner;
 public class MainUI {
 
     private BookMenu bookMenu;
-//    private MemberMenu memberMenu;
-//    private BorrowMenu borrowMenu;
-//    private ReportMenu reportMenu;
+    private MemberMenu memberMenu;
+    private BorrowMenu borrowMenu;
+    private ReportMenu reportMenu;
 
     private BookService bookService;
-//    private MemberService memberService;
-//    private BorrowService borrowService;
-//    private ReportService reportService;
+    private MemberService memberService;
+    private BorrowService borrowService;
+    private ReportService reportService;
     private Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -33,22 +33,24 @@ public class MainUI {
 
     private void init() {
         bookService = new BookService();
-//        memberService = new MemberService();
-//        borrowService = new BorrowService(bookService, memberService);
+        memberService = new MemberService();
+        borrowService = new BorrowService(bookService, memberService);
 
-        // File I/O - Milestone 4: load dữ liệu cũ khi khởi động (nếu có)
+        // File I/O - Milestone 4: load dữ liệu cũ khi khởi động (nếu có).
+        // Thứ tự quan trọng: transactions load CUỐI vì mỗi dòng giao dịch
+        // cần tra cứu lại đúng object Book và Member đã load trước đó.
         bookService.loadFromFile();
-//        memberService.loadFromFile();
-//        borrowService.loadFromFile();
+        memberService.loadFromFile();
+        borrowService.loadFromFile();
 
         bookMenu = new BookMenu(bookService, scanner);
-//        memberMenu = new MemberMenu(memberService, scanner);
-//        borrowMenu = new BorrowMenu(borrowService, scanner);
+        memberMenu = new MemberMenu(memberService, borrowService, scanner);
+        borrowMenu = new BorrowMenu(borrowService, scanner);
 
         // Theo UML: ReportService phụ thuộc BorrowService (để lấy transactions),
         // ReportMenu phụ thuộc ReportService, cùng pattern với các Menu khác.
-//        reportService = new ReportService(borrowService);
-//        reportMenu = new ReportMenu(reportService, scanner);
+        reportService = new ReportService(borrowService);
+        reportMenu = new ReportMenu(reportService, scanner);
     }
 
     private void start() {
@@ -68,9 +70,9 @@ public class MainUI {
 
             switch (choice) {
                 case 1: bookMenu.show(); break;
-//                case 2: memberMenu.show(); break;
-//                case 3: borrowMenu.show(); break;
-//                case 4: reportMenu.show(); break;
+                case 2: memberMenu.show(); break;
+                case 3: borrowMenu.show(); break;
+                case 4: reportMenu.show(); break;
                 case 5: exitAndSave(); break;
                 default: System.out.println("Invalid option.");
             }
@@ -80,8 +82,8 @@ public class MainUI {
     private void exitAndSave() {
         // File I/O - lưu toàn bộ dữ liệu trước khi thoát
         bookService.saveToFile();
-//        memberService.saveToFile();
-//        borrowService.saveToFile();
+        memberService.saveToFile();
+        borrowService.saveToFile();
         System.out.println("Data saved. Goodbye!");
     }
 

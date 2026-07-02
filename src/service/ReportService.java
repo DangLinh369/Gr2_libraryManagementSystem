@@ -1,11 +1,19 @@
-package services;
+package service;
 
-import Entities.Book;
-import Entities.BorrowingTransaction;
-import Entities.Member;
-import java.util.ArrayList;
+import model.Book;
+import model.BorrowingTransaction;
+import model.Member;
+
 import java.util.List;
 
+/**
+ * ReportService - lớp chuyên trách BÁO CÁO (phần của Nam).
+ * Theo UML: ReportMenu -> ReportService -> BorrowService.
+ * ReportService KHÔNG tự lưu dữ liệu nào; mọi báo cáo đều lấy dữ liệu
+ * từ BorrowService (nơi giữ danh sách giao dịch mượn/trả).
+ * Tách riêng để mỗi lớp một nhiệm vụ: BorrowService lo nghiệp vụ mượn/trả,
+ * ReportService là cổng cung cấp số liệu thống kê cho ReportMenu.
+ */
 public class ReportService {
 
     private final BorrowService borrowService;
@@ -14,62 +22,28 @@ public class ReportService {
         this.borrowService = borrowService;
     }
 
+    /** Báo cáo 1 (Reporting #1): sách đang được mượn (chưa trả). */
     public List<BorrowingTransaction> getCurrentlyBorrowedTransactions() {
-        List<BorrowingTransaction> result = new ArrayList<>();
-        for (BorrowingTransaction t : borrowService.getAllTransactions()) {
-            if (t.getReturnDate() == null) {
-                result.add(t);
-            }
-        }
-        return result;
+        return borrowService.getCurrentlyBorrowedTransactions();
     }
 
+    /** Báo cáo 2 (Reporting #2 / Task R1): sách trễ hạn (BR7). */
     public List<BorrowingTransaction> getOverdueTransactions() {
-        List<BorrowingTransaction> result = new ArrayList<>();
-        for (BorrowingTransaction t : borrowService.getAllTransactions()) {
-            if (t.isOverdue()) {
-                result.add(t);
-            }
-        }
-        return result;
+        return borrowService.getOverdueTransactions();
     }
 
+    /** Báo cáo 3 (Reporting #3 / Task R2, BR10): sách phổ biến - xếp giảm dần theo số lần mượn. */
     public List<Book> getPopularBooks() {
-
-        List<Book> sorted = new ArrayList<>(borrowService.getBookService().getAllBooks());
-        for (int i = 0; i < sorted.size() - 1; i++) {
-            int maxIndex = i;
-            for (int j = i + 1; j < sorted.size(); j++) {
-                if (sorted.get(j).getBorrowCount() > sorted.get(maxIndex).getBorrowCount()) {
-                    maxIndex = j;
-                }
-            }
-            Book temp = sorted.get(i);
-            sorted.set(i, sorted.get(maxIndex));
-            sorted.set(maxIndex, temp);
-        }
-        return sorted;
+        return borrowService.getPopularBooks();
     }
 
+    /** Báo cáo 4 (Reporting #4): thành viên mượn nhiều nhất - xếp giảm dần theo tổng lượt mượn. */
     public List<Member> getTopBorrowingMembers() {
-        List<Member> sorted = new ArrayList<>(borrowService.getMemberService().getAllMembers());
-        for (int i = 0; i < sorted.size() - 1; i++) {
-            int maxIndex = i;
-            for (int j = i + 1; j < sorted.size(); j++) {
-                if (countBorrowings(sorted.get(j).getMemberId())
-                        > countBorrowings(sorted.get(maxIndex).getMemberId())) {
-                    maxIndex = j;
-                }
-            }
-            Member temp = sorted.get(i);
-            sorted.set(i, sorted.get(maxIndex));
-            sorted.set(maxIndex, temp);
-        }
-        return sorted;
+        return borrowService.getTopBorrowingMembers();
     }
 
-    public int countBorrowings(String memberId) {
-        return borrowService.getBorrowHistory(memberId).size();
+    /** Tổng số lượt mượn (kể cả đã trả) của 1 thành viên - dùng cho báo cáo 4. */
+    public int countBorrowings(String memberID) {
+        return borrowService.getBorrowHistory(memberID).size();
     }
 }
-
