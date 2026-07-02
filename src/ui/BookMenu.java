@@ -28,14 +28,14 @@ public class BookMenu {
     public void show() {
         int choice;
         do {
-            System.out.println("\n----------- QUẢN LÝ SÁCH -----------");
-            System.out.println("1. Thêm sách");
-            System.out.println("2. Cập nhật sách");
-            System.out.println("3. Xóa sách");
-            System.out.println("4. Xem tất cả sách");
-            System.out.println("5. Tìm kiếm sách");
-            System.out.println("0. Quay lại");
-            System.out.print("Chọn: ");
+            System.out.println("\n----------- BOOK MANAGEMENT -----------");
+            System.out.println("1. Add Book");
+            System.out.println("2. Update Book");
+            System.out.println("3. Delete Book");
+            System.out.println("4. View All Books");
+            System.out.println("5. Search Books");
+            System.out.println("0. Back");
+            System.out.print("Choose: ");
             choice = readInt();
 
             switch (choice) {
@@ -45,14 +45,14 @@ public class BookMenu {
                 case 4: viewAllBooks(); break;
                 case 5: searchBooks(); break;
                 case 0: break;
-                default: System.out.println("Lựa chọn không hợp lệ.");
+                default: System.out.println("Invalid choice.");
             }
         } while (choice != 0);
     }
 
     // Task B1 - Add Book
     private void addBook() {
-        System.out.println("----------- THÊM SÁCH -----------");
+        System.out.println("----------- ADD BOOK -----------");
         System.out.print("Book ID: ");
         String id = scanner.nextLine();
         System.out.print("Title: ");
@@ -66,55 +66,86 @@ public class BookMenu {
         System.out.print("Quantity: ");
         int qty = readInt();
 
+        // Bước xác nhận theo đúng SYSTEM INTERFACE: "[1] Save [2] Cancel"
+        System.out.print("[1] Save [2] Cancel: ");
+        int confirm = readInt();
+        if (confirm != 1) {
+            System.out.println("Add book cancelled.");
+            return;
+        }
+
         try {
             bookService.addBook(new Book(id, title, author, genre, year, qty));
-            System.out.println("=> Thêm sách thành công."); // theo SYSTEM INTERFACE: "Book added successfully."
+            System.out.println("Book added successfully."); // theo SYSTEM INTERFACE: "Book added successfully."
         } catch (InvalidInputException e) {
-            System.out.println("=> Thất bại: " + e.getMessage());
+            System.out.println("=> Failed: " + e.getMessage());
         }
     }
 
     // Task B2 - Update Book
     private void updateBook() {
-        System.out.println("----------- CẬP NHẬT SÁCH -----------");
+        System.out.println("----------- UPDATE BOOK -----------");
         System.out.print("Enter Book ID: ");
         String id = scanner.nextLine();
         try {
             Book existing = bookService.findByID(id);
-            System.out.println("Current Information: " + existing);
-            System.out.print("New title (Enter để giữ nguyên): ");
-            String title = scanner.nextLine();
-            System.out.print("New author (Enter để giữ nguyên): ");
-            String author = scanner.nextLine();
-            System.out.print("New genre (Enter để giữ nguyên): ");
-            String genre = scanner.nextLine();
-            System.out.print("New quantity (Enter để giữ nguyên): ");
+
+            // Hiển thị Current Information nhiều dòng, đúng mẫu SYSTEM INTERFACE
+            System.out.println("Current Information:");
+            System.out.println("Title: " + existing.getTitle());
+            System.out.println("Author: " + existing.getAuthor());
+            System.out.println("Genre: " + existing.getGenre());
+            System.out.println("Publication Year: " + existing.getPublicationYear());
+            System.out.println("Quantity: " + existing.getQuantity());
+
+            // Theo SYSTEM INTERFACE, Task B2 chỉ cho phép cập nhật Quantity
+            System.out.print("Enter new Quantity (leave blank to skip): ");
             String qtyStr = scanner.nextLine();
+
+            // Bước xác nhận: "[1] Update [2] Cancel"
+            System.out.print("[1] Update [2] Cancel: ");
+            int confirm = readInt();
+            if (confirm != 1) {
+                System.out.println("Update cancelled.");
+                return;
+            }
 
             Book updated = new Book(
                     id,
-                    title.isEmpty() ? existing.getTitle() : title,
-                    author.isEmpty() ? existing.getAuthor() : author,
-                    genre.isEmpty() ? existing.getGenre() : genre,
+                    existing.getTitle(),
+                    existing.getAuthor(),
+                    existing.getGenre(),
                     existing.getPublicationYear(),
                     qtyStr.isEmpty() ? existing.getQuantity() : Integer.parseInt(qtyStr)
             );
             bookService.updateBook(updated);
-            System.out.println("=> Cập nhật sách thành công.");
+            System.out.println("Book updated successfully.");
         } catch (BookNotFoundException | InvalidInputException e) {
-            System.out.println("=> Thất bại: " + e.getMessage());
+            System.out.println("=> Failed: " + e.getMessage());
         }
     }
 
     // Task Book Management #3 - Delete Book
+    // Lưu ý: đề bài (SYSTEM INTERFACE) không có mẫu chi tiết cho Delete Book,
+    // nên phần này được viết theo style chung (header + confirm + output message)
+    // để nhất quán với Add/Update Book.
     private void deleteBook() {
-        System.out.print("Enter Book ID cần xóa: ");
+        System.out.println("----------- DELETE BOOK -----------");
+        System.out.print("Enter Book ID: ");
         String id = scanner.nextLine();
+
+        System.out.print("[1] Delete [2] Cancel: ");
+        int confirm = readInt();
+        if (confirm != 1) {
+            System.out.println("Delete cancelled.");
+            return;
+        }
+
         try {
             bookService.deleteBook(id);
-            System.out.println("=> Xóa sách thành công.");
+            System.out.println("Book deleted successfully.");
         } catch (BookNotFoundException e) {
-            System.out.println("=> Thất bại: " + e.getMessage());
+            System.out.println("=> Failed: " + e.getMessage());
         }
     }
 
@@ -123,22 +154,49 @@ public class BookMenu {
         System.out.println("----------- BOOK LIST -----------");
         List<Book> books = bookService.getAllBooks();
         if (books.isEmpty()) {
-            System.out.println("(Chưa có sách nào)");
+            System.out.println("(No books available)");
             return;
         }
-        for (Book b : books) System.out.println(b);
+
+        // Format bảng đúng mẫu SYSTEM INTERFACE: header + dòng kẻ + dữ liệu căn cột
+        // Dùng getBookID() theo đúng model.Book/BookService thực tế.
+        String rowFormat = "%-6s%-20s%-20s%-12s%-6s%-5s%n";
+        System.out.printf(rowFormat, "ID", "Title", "Author", "Genre", "Year", "Qty");
+        System.out.println("------------------------------------------------------------------");
+        for (Book b : books) {
+            System.out.printf(rowFormat,
+                    b.getBookID(), b.getTitle(), b.getAuthor(), b.getGenre(),
+                    b.getPublicationYear(), b.getQuantity());
+        }
+        System.out.println("------------------------------------------------------------------");
+        System.out.print("Press ENTER to return...");
+        scanner.nextLine();
     }
 
     // Task Book Management #5 - Search
+    // Lưu ý: đề bài không có mẫu SYSTEM INTERFACE chi tiết cho Search,
+    // nên phần hiển thị kết quả dùng chung format bảng như View All Books.
     private void searchBooks() {
-        System.out.print("Nhập từ khóa (title/author/genre): ");
+        System.out.println("----------- SEARCH BOOKS -----------");
+        System.out.print("Enter keyword (title/author/genre): ");
         String kw = scanner.nextLine();
         List<Book> result = bookService.searchBooks(kw);
         if (result.isEmpty()) {
-            System.out.println("Không tìm thấy sách phù hợp.");
+            System.out.println("No matching books found.");
             return;
         }
-        for (Book b : result) System.out.println(b);
+
+        String rowFormat = "%-6s%-20s%-20s%-12s%-6s%-5s%n";
+        System.out.printf(rowFormat, "ID", "Title", "Author", "Genre", "Year", "Qty");
+        System.out.println("------------------------------------------------------------------");
+        for (Book b : result) {
+            System.out.printf(rowFormat,
+                    b.getBookID(), b.getTitle(), b.getAuthor(), b.getGenre(),
+                    b.getPublicationYear(), b.getQuantity());
+        }
+        System.out.println("------------------------------------------------------------------");
+        System.out.print("Press ENTER to return...");
+        scanner.nextLine();
     }
 
     private int readInt() {
@@ -146,7 +204,7 @@ public class BookMenu {
             try {
                 return Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.print("Vui lòng nhập số hợp lệ: ");
+                System.out.print("Please enter a valid number: ");
             }
         }
     }
