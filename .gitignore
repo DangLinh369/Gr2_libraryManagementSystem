@@ -1,0 +1,15 @@
+# Build output
+/build/
+/dist/
+
+# Compiled Java files
+*.class
+
+# NetBeans private settings
+/nbproject/private/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
