@@ -1,2 +1,2 @@
-RegularMember|M001|Nguyen Van A|0901111111|a@mail.com
-PremiumMember|M002|Tran Thi B|0902222222|b@mail.com
+RegularMember|M001|Ly Thi Bich Tuyen    |0989898989|bichtuyen@gmail.com
+PremiumMember|M002|Nguyen Thuc Thuy Tien|0988888888|thuytien@gmail.com

@@ -1,3 +1,6 @@
-B001|The Great Gatsby|F. Scott Fitzgerald|Classic|1925|4
-B002|1984|George Orwell|Dystopian|1949|3
-B003|To Kill a Mockingbird|Harper Lee|Classic|1960|1
+B001|Head First Java|Kathy Sierra|Textbook|2022|0
+B002|Clean Code|Robert Martin|Technology|2008|4
+B003|Effective Java|Joshua Bloch|Guidebook|2017|2
+B004|Modern Java|Alan Mycroft|Programming|2018|0
+B005|Spring in Action|Craig Walls|Technology|2020|4
+B006|Thinking in Java|Bruce Eckel|Guidebook|2021|2

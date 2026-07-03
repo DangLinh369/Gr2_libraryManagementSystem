@@ -77,7 +77,7 @@ public class MemberMenu {
         }
 
         try {
-            // UPCASTING (Milestone 3): tạo đúng subclass, khai báo kiểu cha Member
+            // tạo đúng loại theo lựa chọn nhưng lưu bằng kiểu cha Member (upcasting)
             Member member = (type == 2)
                     ? new PremiumMember(id, name, phone, email)
                     : new RegularMember(id, name, phone, email);
@@ -147,8 +147,9 @@ public class MemberMenu {
         }
 
         try {
+            // BR3: không xóa thành viên còn nợ sách
             if (borrowService.countCurrentlyBorrowedByMember(id) > 0) {
-                System.out.println("=> Failed: Member still has outstanding borrowed books (BR3).");
+                System.out.println("=> Failed: Member still has outstanding borrowed books.");
                 return;
             }
             memberService.deleteMember(id);
@@ -191,7 +192,7 @@ public class MemberMenu {
         System.out.printf(rowFormat, "ID", "Name", "Phone", "Email", "Type", "Borrowed");
         System.out.println("--------------------------------------------------------------------------");
         for (Member m : members) {
-            // POLYMORPHISM: m là Regular hoặc Premium; getSimpleName() cho biết loại thật
+            // m có thể là Regular hoặc Premium, lấy tên class thật ra để hiển thị cột Type
             String type = m.getClass().getSimpleName().replace("Member", "");
             System.out.printf(rowFormat,
                     m.getMemberID(), m.getName(), m.getPhone(), m.getEmail(), type,

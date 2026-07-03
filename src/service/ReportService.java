@@ -7,12 +7,9 @@ import model.Member;
 import java.util.List;
 
 /**
- * ReportService - lớp chuyên trách BÁO CÁO (phần của Nam).
- * Theo UML: ReportMenu -> ReportService -> BorrowService.
- * ReportService KHÔNG tự lưu dữ liệu nào; mọi báo cáo đều lấy dữ liệu
- * từ BorrowService (nơi giữ danh sách giao dịch mượn/trả).
- * Tách riêng để mỗi lớp một nhiệm vụ: BorrowService lo nghiệp vụ mượn/trả,
- * ReportService là cổng cung cấp số liệu thống kê cho ReportMenu.
+ * ReportService - lớp báo cáo, không tự giữ dữ liệu nào cả.
+ * Mọi số liệu đều xin từ BorrowService (nơi giữ danh sách giao dịch),
+ * ReportMenu chỉ cần gọi các hàm get... ở đây rồi in ra.
  */
 public class ReportService {
 

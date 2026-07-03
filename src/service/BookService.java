@@ -25,7 +25,7 @@ public class BookService {
         DataInputValidator.validateBook(book); // BR2, BR9
         for (Book b : books) {
             if (b.getBookID().equalsIgnoreCase(book.getBookID())) {
-                throw new InvalidInputException("Book ID '" + book.getBookID() + "' đã tồn tại (BR1)."); // BR1
+                throw new InvalidInputException("Book ID '" + book.getBookID() + "' đã tồn tại."); // BR1
             }
         }
         books.add(book);

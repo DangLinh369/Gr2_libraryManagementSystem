@@ -62,11 +62,11 @@ public class DataInputValidator {
     public static void validateBorrow(Book book, Member member, int currentBorrowedCount)
             throws InvalidInputException {
         if (!book.isAvailable()) {
-            throw new InvalidInputException("Sách '" + book.getTitle() + "' hiện đã hết hàng (BR4)."); // BR4
+            throw new InvalidInputException("Sách '" + book.getTitle() + "' hiện đã hết hàng."); // BR4
         }
         if (currentBorrowedCount >= member.getBorrowLimit()) {
             throw new InvalidInputException(
-                    "Thành viên đã đạt giới hạn mượn (" + member.getBorrowLimit() + " sách) (BR5)."); // BR5
+                    "Thành viên đã đạt giới hạn mượn (" + member.getBorrowLimit() + " sách)."); // BR5
         }
     }
 
@@ -78,7 +78,7 @@ public class DataInputValidator {
             throw new InvalidInputException("Ngày mượn không được để trống.");
         }
         if (borrowDate.isAfter(LocalDate.now())) {
-            throw new InvalidInputException("Ngày mượn không được ở tương lai (BR6)."); // BR6
+            throw new InvalidInputException("Ngày mượn không được ở tương lai."); // BR6
         }
     }
 
@@ -88,7 +88,7 @@ public class DataInputValidator {
             throw new InvalidInputException("Ngày trả không được để trống.");
         }
         if (!returnDate.isAfter(borrowDate)) {
-            throw new InvalidInputException("Ngày trả phải sau ngày mượn (BR6)."); // BR6
+            throw new InvalidInputException("Ngày trả phải sau ngày mượn."); // BR6
         }
     }
 }

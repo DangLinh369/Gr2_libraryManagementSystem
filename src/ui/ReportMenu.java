@@ -88,7 +88,7 @@ public class ReportMenu {
                 "Due Date", "Days Overdue", "Fine (VND)");
         System.out.println("--------------------------------------------------------------------------------------------------");
         for (BorrowingTransaction t : overdue) {
-            // ĐA HÌNH (BR7): member thật sự (Regular/Premium) tự chọn công thức tính phạt
+            // mỗi loại member có mức phạt riêng (BR7) nên cứ để member tự tính -> đa hình
             double fine = t.getMember().calcFine(t.getOverdueDays());
             System.out.printf(rowFormat,
                     t.getBook().getBookID(), t.getBook().getTitle(),
@@ -141,10 +141,10 @@ public class ReportMenu {
         scanner.nextLine();
     }
 
-    // File I/O (Milestone 4) - xuất báo cáo ra file text data/report.txt
+    // xuất 2 báo cáo chính ra file text để lưu lại (File I/O - Milestone 4)
     private void exportReports() {
         String filename = "data/report.txt";
-        // try-with-resources: hết khối try Java TỰ ĐỘNG đóng file, kể cả khi có lỗi
+        // mở file ngay trong try để Java tự đóng khi xong, khỏi lo quên close()
         try (FileWriter w = new FileWriter(filename)) {
             w.write("OVERDUE BOOKS\n");
             for (BorrowingTransaction t : reportService.getOverdueTransactions()) {

@@ -25,7 +25,7 @@ public class MemberService {
         DataInputValidator.validateMember(member); // BR9
         for (Member m : members) {
             if (m.getMemberID().equalsIgnoreCase(member.getMemberID())) {
-                throw new InvalidInputException("Member ID '" + member.getMemberID() + "' đã tồn tại (BR1)."); // BR1
+                throw new InvalidInputException("Member ID '" + member.getMemberID() + "' đã tồn tại."); // BR1
             }
         }
         members.add(member);

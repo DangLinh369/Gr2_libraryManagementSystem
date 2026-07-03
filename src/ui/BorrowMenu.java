@@ -94,7 +94,7 @@ public class BorrowMenu {
         }
 
         try {
-            // BR7 - ĐA HÌNH: fine do member thật sự (Regular/Premium) tự tính
+            // tiền phạt do chính member tự tính theo loại của nó (BR7)
             double fine = borrowService.returnBook(memberID, bookID, returnDate);
             if (fine <= 0) {
                 System.out.println("Book returned successfully. No overdue fine.");
