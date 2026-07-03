@@ -74,7 +74,7 @@ public class BookMenu {
             bookService.addBook(new Book(id, title, author, genre, year, qty));
             System.out.println("Book added successfully."); // theo SYSTEM INTERFACE: "Book added successfully."
         } catch (InvalidInputException e) {
-            System.out.println("=> Failed: " + e.getMessage());
+            //System.out.println("=> Failed: " + e.getMessage());
         }
     }
 
@@ -117,7 +117,7 @@ public class BookMenu {
             bookService.updateBook(updated);
             System.out.println("Book updated successfully.");
         } catch (BookNotFoundException | InvalidInputException e) {
-            System.out.println("=> Failed: " + e.getMessage());
+            //System.out.println("=> Failed: " + e.getMessage());
         }
     }
 
@@ -137,7 +137,7 @@ public class BookMenu {
             bookService.deleteBook(id);
             System.out.println("Book deleted successfully.");
         } catch (BookNotFoundException e) {
-            System.out.println("=> Failed: " + e.getMessage());
+            //System.out.println("=> Failed: " + e.getMessage());
         }
     }
 
