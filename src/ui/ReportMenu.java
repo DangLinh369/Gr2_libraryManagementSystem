@@ -11,11 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * ReportMenu - hiển thị submenu Báo cáo (Reporting #1-4, Task R1-R2) - phần của Nam.
- * Chỉ lo phần HIỂN THỊ; dữ liệu báo cáo do ReportService cung cấp
- * (đúng nguyên tắc layering: UI -> Service, giống các Menu khác).
- */
 public class ReportMenu {
 
     private ReportService reportService;
@@ -74,7 +69,7 @@ public class ReportMenu {
         scanner.nextLine();
     }
 
-    // Reporting #2 / Task R1 - sách trễ hạn kèm tiền phạt dự kiến
+    //sách trễ hạn kèm tiền phạt dự kiến
     private void overdueReport() {
         System.out.println("----------- OVERDUE BOOKS -----------");
         List<BorrowingTransaction> overdue = reportService.getOverdueTransactions();
@@ -88,7 +83,7 @@ public class ReportMenu {
                 "Due Date", "Days Overdue", "Fine (VND)");
         System.out.println("--------------------------------------------------------------------------------------------------");
         for (BorrowingTransaction t : overdue) {
-            // mỗi loại member có mức phạt riêng (BR7) nên cứ để member tự tính -> đa hình
+            // mỗi kieu member có mức phạt riêng (BR7) nên cứ để member tự tính -> đa hình
             double fine = t.getMember().calcFine(t.getOverdueDays());
             System.out.printf(rowFormat,
                     t.getBook().getBookID(), t.getBook().getTitle(),
@@ -100,7 +95,7 @@ public class ReportMenu {
         scanner.nextLine();
     }
 
-    // Reporting #3 / Task R2 (BR10) - sách phổ biến nhất (BorrowService đã xếp sẵn giảm dần)
+    // sách phổ biến nhất (BorrowService đã xếp sẵn giảm dần)
     private void popularReport() {
         System.out.println("----------- MOST POPULAR BOOKS -----------");
         List<Book> books = reportService.getPopularBooks();
@@ -121,7 +116,7 @@ public class ReportMenu {
         scanner.nextLine();
     }
 
-    // Reporting #4 - thành viên mượn nhiều nhất
+    //thành viên mượn nhiều nhất
     private void topMembersReport() {
         System.out.println("----------- TOP BORROWING MEMBERS -----------");
         List<Member> members = reportService.getTopBorrowingMembers();
@@ -141,7 +136,7 @@ public class ReportMenu {
         scanner.nextLine();
     }
 
-    // xuất 2 báo cáo chính ra file text để lưu lại (File I/O - Milestone 4)
+    // xuất 2 báo cáo chính ra file text để lưu lại
     private void exportReports() {
         String filename = "data/report.txt";
         // mở file ngay trong try để Java tự đóng khi xong, khỏi lo quên close()

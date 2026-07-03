@@ -7,11 +7,6 @@ import service.ReportService;
 
 import java.util.Scanner;
 
-/**
- * MainUI - entry point của hệ thống, chứa Main Menu (SYSTEM INTERFACE mục 1).
- * Composition: MainUI tạo và sở hữu BookMenu, MemberMenu, BorrowMenu, ReportMenu
- * (Menu sống/chết cùng MainUI, không tồn tại độc lập).
- */
 public class MainUI {
 
     private BookMenu bookMenu;
@@ -36,9 +31,6 @@ public class MainUI {
         memberService = new MemberService();
         borrowService = new BorrowService(bookService, memberService);
 
-        // File I/O - Milestone 4: load dữ liệu cũ khi khởi động (nếu có).
-        // Thứ tự quan trọng: transactions load CUỐI vì mỗi dòng giao dịch
-        // cần tra cứu lại đúng object Book và Member đã load trước đó.
         bookService.loadFromFile();
         memberService.loadFromFile();
         borrowService.loadFromFile();
@@ -47,8 +39,6 @@ public class MainUI {
         memberMenu = new MemberMenu(memberService, borrowService, scanner);
         borrowMenu = new BorrowMenu(borrowService, scanner);
 
-        // Theo UML: ReportService phụ thuộc BorrowService (để lấy transactions),
-        // ReportMenu phụ thuộc ReportService, cùng pattern với các Menu khác.
         reportService = new ReportService(borrowService);
         reportMenu = new ReportMenu(reportService, scanner);
     }

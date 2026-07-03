@@ -12,11 +12,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * BorrowMenu - hiển thị submenu Mượn/Trả sách (Task L1-L3 + Borrowing Management #1-4).
- * Ngày mượn/trả do người dùng nhập theo định dạng DD/MM/YYYY (đúng SYSTEM INTERFACE),
- * được validate qua DataInputValidator trong BorrowService (BR6).
- */
+
 public class BorrowMenu {
 
     private BorrowService borrowService;
@@ -51,7 +47,6 @@ public class BorrowMenu {
         } while (choice != 0);
     }
 
-    // Task L1 - Borrow Book: BR3, BR4, BR5, BR6, BR8 được BorrowService kiểm tra
     private void borrowBook() {
         System.out.println("----------- BORROW BOOK -----------");
         System.out.print("Member ID: ");
@@ -77,7 +72,6 @@ public class BorrowMenu {
         }
     }
 
-    // Task L2/L3 - Return Book: BR6, BR7 (tiền phạt - đa hình calcFine), BR8
     private void returnBook() {
         System.out.println("----------- RETURN BOOK -----------");
         System.out.print("Member ID: ");
@@ -106,7 +100,6 @@ public class BorrowMenu {
         }
     }
 
-    // Borrowing Management #3 - View all borrowed books (currently out)
     private void viewBorrowedBooks() {
         System.out.println("----------- CURRENTLY BORROWED BOOKS -----------");
         List<BorrowingTransaction> list = borrowService.getCurrentlyBorrowedTransactions();
@@ -119,7 +112,6 @@ public class BorrowMenu {
         scanner.nextLine();
     }
 
-    // Borrowing Management #4 - View borrowing history for a specific member
     private void viewMemberHistory() {
         System.out.println("----------- BORROWING HISTORY -----------");
         System.out.print("Enter Member ID: ");
@@ -145,7 +137,6 @@ public class BorrowMenu {
         System.out.println("--------------------------------------------------------------------------------");
     }
 
-    /** Đọc 1 ngày định dạng DD/MM/YYYY, nhập sai thì yêu cầu nhập lại (không crash). */
     private LocalDate readDate(String prompt) {
         while (true) {
             System.out.print(prompt);

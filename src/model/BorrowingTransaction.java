@@ -3,15 +3,10 @@ package model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-/**
- * BorrowingTransaction - entity lưu thông tin 1 lần mượn sách.
- * BR6: borrowDate phải <= ngày hiện tại; returnDate phải > borrowDate (validate ở DataInputValidator).
- * BR10: dùng để tính sách phổ biến (popular books) thông qua đếm số transaction theo bookID.
- */
 public class BorrowingTransaction {
 
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    // Kỳ hạn mượn: due date = borrowDate + 14 ngày (LOAN_DAYS = 14 theo report Lab 1/2)
+    
     private static final int DEFAULT_BORROW_DAYS = 14;
 
     private String transactionID;
@@ -42,11 +37,6 @@ public class BorrowingTransaction {
         this.returnDate = returnDate;
     }
 
-    /**
-     * Giao dịch có trễ hạn không? (theo report Lab 1/2)
-     * - Đã trả: so NGÀY TRẢ với hạn trả (trả muộn vẫn tính là overdue).
-     * - Chưa trả: so NGÀY HÔM NAY với hạn trả.
-     */
     public boolean isOverdue() {
         LocalDate checkDate = (returnDate != null) ? returnDate : LocalDate.now();
         return checkDate.isAfter(dueDate);

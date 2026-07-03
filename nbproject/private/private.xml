@@ -18,5 +18,26 @@
             <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/ui/BorrowMenu.java</file>
             <file>file:/C:/NetBeansProjects/FP_libraryManagementSystem/src/service/MemberService.java</file>
         </group>
+        <group name="Hoc tren lop">
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/model/RegularMember.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/ui/MainUI.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/model/BorrowingTransaction.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/ui/BookMenu.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/model/Member.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/model/Book.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/exception/InvalidInputException.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/ui/MemberMenu.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/model/PremiumMember.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/exception/BookNotFoundException.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/exception/LibraryException.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/service/BorrowService.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/service/MemberService.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/exception/MemberNotFoundException.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/ui/BorrowMenu.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/validator/DataInputValidator.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/service/ReportService.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/ui/ReportMenu.java</file>
+            <file>file:/D:/PRO192/Gr2_libraryManagementSystem/src/service/BookService.java</file>
+        </group>
     </open-files>
 </project-private>

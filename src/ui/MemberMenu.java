@@ -11,12 +11,7 @@ import service.MemberService;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * MemberMenu - hiển thị submenu Quản lý thành viên (Task M1-M2 + các Functional Requirement
- * Member Management #1-5). Cùng pattern với BookMenu: UI -> Service -> Entity.
- * Cần thêm BorrowService để kiểm tra BR3 khi xóa: "Remove a member
- * (only if no outstanding borrowed books)".
- */
+
 public class MemberMenu {
 
     private MemberService memberService;
@@ -54,7 +49,6 @@ public class MemberMenu {
         } while (choice != 0);
     }
 
-    // Task M1 - Add Member (theo SYSTEM INTERFACE: nhập thông tin + chọn loại + confirm)
     private void addMember() {
         System.out.println("----------- ADD MEMBER -----------");
         System.out.print("Member ID: ");
@@ -77,7 +71,7 @@ public class MemberMenu {
         }
 
         try {
-            // tạo đúng loại theo lựa chọn nhưng lưu bằng kiểu cha Member (upcasting)
+
             Member member = (type == 2)
                     ? new PremiumMember(id, name, phone, email)
                     : new RegularMember(id, name, phone, email);
@@ -88,7 +82,7 @@ public class MemberMenu {
         }
     }
 
-    // Task M2 - Update Member (blank = giữ giá trị cũ, giống pattern Update Book)
+
     private void updateMember() {
         System.out.println("----------- UPDATE MEMBER -----------");
         System.out.print("Enter Member ID: ");
@@ -132,8 +126,6 @@ public class MemberMenu {
         }
     }
 
-    // Functional Requirement Member Management #3 - Delete Member
-    // BR3: chỉ xóa được khi thành viên KHÔNG còn sách đang mượn.
     private void deleteMember() {
         System.out.println("----------- DELETE MEMBER -----------");
         System.out.print("Enter Member ID: ");
@@ -172,7 +164,6 @@ public class MemberMenu {
         scanner.nextLine();
     }
 
-    // Functional Requirement Member Management #5 - Search by name or ID
     private void searchMembers() {
         System.out.println("----------- SEARCH MEMBERS -----------");
         System.out.print("Enter keyword (name/ID): ");

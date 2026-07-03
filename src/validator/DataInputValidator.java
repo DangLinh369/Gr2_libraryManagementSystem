@@ -5,11 +5,6 @@ import model.Book;
 import model.Member;
 import java.time.LocalDate;
 
-/**
- * DataInputValidator - tách riêng toàn bộ logic validate khỏi business logic của Service.
- * BR9: All inputs must be validated before processing.
- * Mỗi Service (BookService, MemberService, BorrowService) gọi qua class này trước khi xử lý.
- */
 public class DataInputValidator {
 
     /**

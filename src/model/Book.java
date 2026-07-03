@@ -41,9 +41,6 @@ public class Book {
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    /**
-     * BR4: sách phải còn tồn kho (stock > 0) mới được mượn.
-     */
     public boolean isAvailable() {
         return quantity > 0;
     }

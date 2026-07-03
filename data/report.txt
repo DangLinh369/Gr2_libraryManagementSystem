@@ -1,0 +1,10 @@
+OVERDUE BOOKS
+B002 - Clean Code | Days overdue: 9 | Fine: 45000 VND
+B001 - Head First Java | Days overdue: 9 | Fine: 18000 VND
+B002 - Clean Code | Days overdue: 9 | Fine: 45000 VND
+B003 - Effective Java | Days overdue: 10 | Fine: 50000 VND
+
+MOST POPULAR BOOKS
+B002 - Clean Code
+B001 - Head First Java
+B003 - Effective Java

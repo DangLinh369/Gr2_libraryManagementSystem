@@ -11,11 +11,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * MemberService - quản lý danh sách Member (abstract class, chứa cả RegularMember & PremiumMember
- * nhờ Upcasting - Milestone 3: "Cập nhật ArrayList để chứa được kiểu dữ liệu superclass").
- * BR1: memberID phải unique.
- */
+
 public class MemberService {
 
     private static final String FILE_PATH = "data/members.txt";
@@ -39,13 +35,6 @@ public class MemberService {
         existing.setEmail(updated.getEmail());
     }
 
-    /**
-     * Functional Requirement Member Management #3: chỉ xóa được nếu không còn sách đang mượn.
-     * Việc kiểm tra "outstanding borrowed books" nên gọi chéo qua BorrowService ở tầng Menu/UI
-     * trước khi gọi hàm này, để tránh phụ thuộc ngược (Service không nên gọi Service khác cùng cấp
-     * trừ khi thực sự cần - ở đây BorrowService đã giữ tham chiếu memberService nên chiều phụ thuộc
-     * một chiều BorrowService -> MemberService là hợp lý).
-     */
     public void deleteMember(String memberID) throws MemberNotFoundException {
         Member member = findByID(memberID);
         members.remove(member);

@@ -8,11 +8,7 @@ import service.BookService;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * BookMenu - hiển thị submenu Quản lý sách (Task B1-B5).
- * Chỉ phụ thuộc vào BookService, không truy cập trực tiếp Book/ArrayList
- * (đúng nguyên tắc layering: UI -> Service -> Entity).
- */
+
 public class BookMenu {
 
     private BookService bookService;
@@ -82,7 +78,7 @@ public class BookMenu {
         }
     }
 
-    // Task B2 - Update Book
+    // Update Book
     private void updateBook() {
         System.out.println("----------- UPDATE BOOK -----------");
         System.out.print("Enter Book ID: ");
@@ -125,10 +121,6 @@ public class BookMenu {
         }
     }
 
-    // Task Book Management #3 - Delete Book
-    // Lưu ý: đề bài (SYSTEM INTERFACE) không có mẫu chi tiết cho Delete Book,
-    // nên phần này được viết theo style chung (header + confirm + output message)
-    // để nhất quán với Add/Update Book.
     private void deleteBook() {
         System.out.println("----------- DELETE BOOK -----------");
         System.out.print("Enter Book ID: ");
@@ -149,7 +141,7 @@ public class BookMenu {
         }
     }
 
-    // Task B3 - View All Books
+    //View All Books
     private void viewAllBooks() {
         System.out.println("----------- BOOK LIST -----------");
         List<Book> books = bookService.getAllBooks();
@@ -158,8 +150,6 @@ public class BookMenu {
             return;
         }
 
-        // Format bảng đúng mẫu SYSTEM INTERFACE: header + dòng kẻ + dữ liệu căn cột
-        // Dùng getBookID() theo đúng model.Book/BookService thực tế.
         String rowFormat = "%-6s%-20s%-20s%-12s%-6s%-5s%n";
         System.out.printf(rowFormat, "ID", "Title", "Author", "Genre", "Year", "Qty");
         System.out.println("------------------------------------------------------------------");
@@ -173,9 +163,6 @@ public class BookMenu {
         scanner.nextLine();
     }
 
-    // Task Book Management #5 - Search
-    // Lưu ý: đề bài không có mẫu SYSTEM INTERFACE chi tiết cho Search,
-    // nên phần hiển thị kết quả dùng chung format bảng như View All Books.
     private void searchBooks() {
         System.out.println("----------- SEARCH BOOKS -----------");
         System.out.print("Enter keyword (title/author/genre): ");

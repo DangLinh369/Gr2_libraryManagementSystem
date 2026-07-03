@@ -31,14 +31,7 @@ public class BorrowService {
         this.memberService = memberService;
     }
 
-    /**
-     * Task L1 - Borrow Book.
-     * BR3: member phải tồn tại (findByID ném MemberNotFoundException nếu không có).
-     * BR4: book phải available.
-     * BR5: member chưa vượt borrow limit.
-     * BR6: borrowDate hợp lệ.
-     * BR8: giảm stock sách sau khi mượn thành công.
-     */
+ 
     public BorrowingTransaction borrowBook(String memberID, String bookID, LocalDate borrowDate)
             throws BookNotFoundException, MemberNotFoundException, InvalidInputException {
 
@@ -57,12 +50,7 @@ public class BorrowService {
         return tx;
     }
 
-    /**
-     * Task L2/L3 - Return Book.
-     * BR6: returnDate phải sau borrowDate.
-     * BR7: tính phí phạt nếu trả trễ qua member.calcFine() (đa hình).
-     * BR8: tăng stock sách sau khi trả.
-     */
+
     public double returnBook(String memberID, String bookID, LocalDate returnDate)
             throws BookNotFoundException, MemberNotFoundException, InvalidInputException {
 
@@ -90,8 +78,6 @@ public class BorrowService {
         return null;
     }
 
-    // public để MemberMenu kiểm tra BR3 (không xóa member còn nợ sách)
-    // và hiển thị cột "Borrowed" trong danh sách thành viên
     public int countCurrentlyBorrowedByMember(String memberID) {
         int count = 0;
         for (BorrowingTransaction t : txs) {
@@ -103,7 +89,7 @@ public class BorrowService {
     }
 
     /**
-     * Reporting #2 - sách quá hạn (Task R1).
+     *  sách quá hạn (Task R1).
      */
     public List<BorrowingTransaction> getOverdueTransactions() {
         List<BorrowingTransaction> result = new ArrayList<>();
@@ -114,7 +100,7 @@ public class BorrowService {
     }
 
     /**
-     * Reporting #3 - sách phổ biến nhất theo BR10 (số lần mượn nhiều nhất), Task R2.
+     * sách phổ biến nhất theo BR10 (số lần mượn nhiều nhất), Task R2.
      */
     public List<Book> getPopularBooks() {
         Map<String, Integer> countMap = new HashMap<>();
@@ -132,7 +118,7 @@ public class BorrowService {
     }
 
     /**
-     * Borrowing Management #4 - lịch sử mượn của 1 thành viên.
+     * - lịch sử mượn của 1 thành viên.
      */
     public List<BorrowingTransaction> getBorrowHistory(String memberID) {
         List<BorrowingTransaction> result = new ArrayList<>();
@@ -143,7 +129,7 @@ public class BorrowService {
     }
 
     /**
-     * Borrowing Management #3 / Reporting #1 - tất cả sách đang được mượn (chưa trả).
+     * / Reporting #1 - tất cả sách đang được mượn (chưa trả).
      * Khác với getOverdueTransactions(): đây là tập hợp lớn hơn (bao gồm cả sách chưa quá hạn).
      */
     public List<BorrowingTransaction> getCurrentlyBorrowedTransactions() {
@@ -155,7 +141,7 @@ public class BorrowService {
     }
 
     /**
-     * Reporting #4 - thành viên mượn nhiều nhất.
+     *  thành viên mượn nhiều nhất.
      */
     public List<Member> getTopBorrowingMembers() {
         Map<String, Integer> countMap = new HashMap<>();
@@ -183,10 +169,6 @@ public class BorrowService {
         }
     }
 
-    /**
-     * Đọc lại transaction từ file - cần bookService và memberService đã load xong trước đó
-     * để map lại đúng object Book/Member (tránh tạo bản sao trùng lặp trong memory).
-     */
     public void loadFromFile() {
         File file = new File(FILE_PATH);
         if (!file.exists()) return;

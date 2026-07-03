@@ -19,7 +19,7 @@ public class BookService {
     private ArrayList<Book> books = new ArrayList<>();
 
     /**
-     * BR1 + BR2: kiểm tra unique ID và validate dữ liệu trước khi thêm.
+     *kiểm tra unique ID và validate dữ liệu trước khi thêm.
      */
     public void addBook(Book book) throws InvalidInputException {
         DataInputValidator.validateBook(book); // BR2, BR9
@@ -41,11 +41,7 @@ public class BookService {
         existing.setQuantity(updated.getQuantity());
     }
 
-    /**
-     * Functional Requirement Book Management #3: chỉ xóa được nếu sách không đang được mượn
-     * (quantity hiện tại bằng đúng quantity gốc -> đơn giản hoá: coi như available toàn bộ).
-     * Trong thực tế nên kiểm tra qua BorrowService.getCurrentlyBorrowedTransactions().
-     */
+
     public void deleteBook(String bookID) throws BookNotFoundException {
         Book book = findByID(bookID);
         books.remove(book);
@@ -76,7 +72,7 @@ public class BookService {
     }
 
     /**
-     * File I/O - Milestone 4. Ghi toàn bộ danh sách Book ra file text.
+     * Ghi toàn bộ danh sách Book ra file text.
      */
     public void saveToFile() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
@@ -90,7 +86,7 @@ public class BookService {
     }
 
     /**
-     * File I/O - Milestone 4. Đọc danh sách Book từ file text (nếu file đã tồn tại).
+     * Đọc danh sách Book từ file text (nếu file đã tồn tại).
      */
     public void loadFromFile() {
         File file = new File(FILE_PATH);
