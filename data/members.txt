@@ -1,2 +1,4 @@
-RegularMember|M001|Ly Thi Bich Tuyen    |0989898989|bichtuyen@gmail.com
+RegularMember|M001|Ly Thi Bich Tuyen|0989898989|bichtuyen@gmail.com
 PremiumMember|M002|Nguyen Thuc Thuy Tien|0988888888|thuytien@gmail.com
+RegularMember|21324|Nguyen Thai Binh|0123456789|thaibinh@gmail.com
+PremiumMember|M1234|Nguyen Thai|0198765432|binh@gmail.com

@@ -9,7 +9,7 @@ public abstract class Member {
 
     public Member(String memberID, String name, String phone, String email) {
         this.memberID = memberID; // BR1: gán 1 lần, không có setMemberID()
-        this.name = name;
+        this.name = capitalizeWords(name);
         this.phone = phone;
         this.email = email;
     }
@@ -45,4 +45,22 @@ public abstract class Member {
         // Lưu kèm loại member để khi đọc lại file biết tạo RegularMember hay PremiumMember
         return getClass().getSimpleName() + "|" + memberID + "|" + name + "|" + phone + "|" + email;
     }
+    
+    private String capitalizeWords(String input){
+        if (input==null || input.trim().isEmpty())
+            return input;
+        
+        String [] words = input.trim().toLowerCase().split("\\s+");
+        
+        StringBuilder sb = new StringBuilder();
+        for (String w : words){
+            sb.append(Character.toUpperCase(w.charAt(0)))
+                    .append(w.substring(1))
+                    .append(" ");
+            
+        }
+    
+    return sb.toString().trim();
+    } 
 }
+

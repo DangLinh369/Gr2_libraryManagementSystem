@@ -37,6 +37,10 @@ public class DataInputValidator {
      * BR1: memberID không được rỗng. Validate cơ bản các field còn lại.
      */
     public static void validateMember(Member member) throws InvalidInputException {
+        if (!member.getMemberID().matches("M\\d+$")){
+        throw new InvalidInputException("Member ID phải có định dạng M kèm số, ví dụ M001");
+                
+    }
         if (member.getMemberID() == null || member.getMemberID().trim().isEmpty()) {
             throw new InvalidInputException("Member ID không được để trống.");
         }
