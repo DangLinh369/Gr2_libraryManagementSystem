@@ -61,9 +61,35 @@ public class Book {
         return bookID + "|" + title + "|" + author + "|" + genre + "|" + publicationYear + "|" + quantity;
     }
 
+    //BR9 + File I/O validation: a single bad line must not crash the whole program on load.
+    //If data is malformed, throw a clear IllegalArgumentException for BookService to catch and skip,
+    //instead of letting a raw NumberFormatException/ArrayIndexOutOfBoundsException crash the app.
     public static Book fromFileLine(String line) {
-        String[] parts = line.split("\\|");
-        return new Book(parts[0], parts[1], parts[2], parts[3],
-                Integer.parseInt(parts[4]), Integer.parseInt(parts[5]));
+        if (line == null || line.trim().isEmpty()) {
+            throw new IllegalArgumentException("Book data line is empty.");
+        }
+        String[] parts = line.split("\\|", -1);
+        if (parts.length < 6) {
+            throw new IllegalArgumentException("Book data line is missing fields (expected 6, got " + parts.length + "): " + line);
+        }
+        String bookID = parts[0].trim();
+        String title = parts[1].trim();
+        String author = parts[2].trim();
+        String genre = parts[3].trim();
+        if (bookID.isEmpty() || title.isEmpty() || author.isEmpty() || genre.isEmpty()) {
+            throw new IllegalArgumentException("Book data line has an empty required field: " + line);
+        }
+        int publicationYear;
+        int quantity;
+        try {
+            publicationYear = Integer.parseInt(parts[4].trim());
+            quantity = Integer.parseInt(parts[5].trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Publication year or Quantity is not a valid number: " + line);
+        }
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Negative quantity in data file: " + line);
+        }
+        return new Book(bookID, title, author, genre, publicationYear, quantity);
     }
 }

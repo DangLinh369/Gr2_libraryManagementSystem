@@ -48,18 +48,12 @@ public class BookMenu {
     //them sach
     private void addBook() {
         System.out.println("----------- ADD BOOK -----------");
-        System.out.print("Book ID: ");
-        String id = scanner.nextLine();
-        System.out.print("Title: ");
-        String title = scanner.nextLine();
-        System.out.print("Author: ");
-        String author = scanner.nextLine();
-        System.out.print("Genre: ");
-        String genre = scanner.nextLine();
-        System.out.print("Publication Year: ");
-        int year = readInt();
-        System.out.print("Quantity: ");
-        int qty = readInt();
+        String id = readValidBookId();
+        String title = readNonEmpty("Title: ");
+        String author = readNonEmpty("Author: ");
+        String genre = readNonEmpty("Genre: ");
+        int year = readValidPublicationYear();
+        int qty = readValidQuantity();
 
         //xac nhan truoc khi luu
         System.out.print("[1] Save [2] Cancel: ");
@@ -73,7 +67,85 @@ public class BookMenu {
             bookService.addBook(new Book(id, title, author, genre, year, qty));
             System.out.println("Book added successfully.");
         } catch (InvalidInputException e) {
-            //System.out.println("=> Failed: " + e.getMessage());
+            System.out.println("=> Failed: " + e.getMessage());
+        }
+    }
+
+    //keeps asking for a Book ID until it has a valid format AND is not a duplicate
+    private String readValidBookId() {
+        while (true) {
+            System.out.print("Book ID: ");
+            String id = scanner.nextLine().trim();
+            if (!BookService.isValidBookIdFormat(id)) {
+                System.out.println("Invalid Book ID. It must be letter B followed by digits, e.g. B001. Please re-enter.");
+                continue;
+            }
+            if (bookService.bookIdExists(id)) {
+                System.out.println("Book ID '" + id + "' already exists. Please enter a different ID.");
+                continue;
+            }
+            return id;
+        }
+    }
+
+    //keeps asking for a text field until it is not empty
+    private String readNonEmpty(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String value = scanner.nextLine().trim();
+            if (!value.isEmpty()) {
+                return value;
+            }
+            System.out.println("This field must not be empty. Please re-enter.");
+        }
+    }
+
+    //keeps asking for Publication Year until it is a valid, reasonable year
+    private int readValidPublicationYear() {
+        while (true) {
+            System.out.print("Publication Year: ");
+            int year = readInt();
+            if (!BookService.isValidPublicationYear(year)) {
+                System.out.println("Publication year must be between " + BookService.minPublicationYear()
+                        + " and the current year. Please re-enter.");
+                continue;
+            }
+            return year;
+        }
+    }
+
+    //keeps asking for Quantity until it is a non-negative integer
+    private int readValidQuantity() {
+        while (true) {
+            System.out.print("Quantity: ");
+            int qty = readInt();
+            if (qty < 0) {
+                System.out.println("Quantity must not be negative. Please re-enter.");
+                continue;
+            }
+            return qty;
+        }
+    }
+
+    //used by updateBook(): blank keeps the current value, otherwise keeps asking until
+    //a valid non-negative integer is entered
+    private int readValidQuantityOrSkip(int currentQuantity) {
+        while (true) {
+            System.out.print("Enter new Quantity (leave blank to skip): ");
+            String qtyStr = scanner.nextLine().trim();
+            if (qtyStr.isEmpty()) {
+                return currentQuantity;
+            }
+            try {
+                int parsed = Integer.parseInt(qtyStr);
+                if (parsed < 0) {
+                    System.out.println("Quantity must not be negative. Please re-enter.");
+                    continue;
+                }
+                return parsed;
+            } catch (NumberFormatException e) {
+                System.out.println("Quantity must be an integer. Please re-enter.");
+            }
         }
     }
 
@@ -81,7 +153,7 @@ public class BookMenu {
     private void updateBook() {
         System.out.println("----------- UPDATE BOOK -----------");
         System.out.print("Enter Book ID: ");
-        String id = scanner.nextLine();
+        String id = scanner.nextLine().trim();
         try {
             Book existing = bookService.findByID(id);
 
@@ -94,8 +166,7 @@ public class BookMenu {
             System.out.println("Quantity: " + existing.getQuantity());
 
             //de bai chi cho sua quantity
-            System.out.print("Enter new Quantity (leave blank to skip): ");
-            String qtyStr = scanner.nextLine();
+            int newQuantity = readValidQuantityOrSkip(existing.getQuantity());
 
             //xac nhan
             System.out.print("[1] Update [2] Cancel: ");
@@ -111,19 +182,19 @@ public class BookMenu {
                     existing.getAuthor(),
                     existing.getGenre(),
                     existing.getPublicationYear(),
-                    qtyStr.isEmpty() ? existing.getQuantity() : Integer.parseInt(qtyStr)
+                    newQuantity
             );
             bookService.updateBook(updated);
             System.out.println("Book updated successfully.");
         } catch (BookNotFoundException | InvalidInputException e) {
-            //System.out.println("=> Failed: " + e.getMessage());
+            System.out.println("=> Failed: " + e.getMessage());
         }
     }
 
     private void deleteBook() {
         System.out.println("----------- DELETE BOOK -----------");
         System.out.print("Enter Book ID: ");
-        String id = scanner.nextLine();
+        String id = scanner.nextLine().trim();
 
         System.out.print("[1] Delete [2] Cancel: ");
         int confirm = readInt();
@@ -136,7 +207,7 @@ public class BookMenu {
             bookService.deleteBook(id);
             System.out.println("Book deleted successfully.");
         } catch (BookNotFoundException e) {
-            //System.out.println("=> Failed: " + e.getMessage());
+            System.out.println("=> Failed: " + e.getMessage());
         }
     }
 

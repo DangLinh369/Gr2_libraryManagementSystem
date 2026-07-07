@@ -7,75 +7,74 @@ import java.time.LocalDate;
 
 public class DataInputValidator {
 
-    //BR2: field sach khong duoc rong ( check trung id nam o BookService )
+    //BR2: book fields must not be empty (duplicate ID check lives in BookService)
     public static void validateBook(Book book) throws InvalidInputException {
         if (book.getBookID() == null || book.getBookID().trim().isEmpty()) {
-            throw new InvalidInputException("Book ID không được để trống.");
+            throw new InvalidInputException("Book ID must not be empty.");
         }
         if (book.getTitle() == null || book.getTitle().trim().isEmpty()) {
-            throw new InvalidInputException("Title không được để trống."); // BR2
+            throw new InvalidInputException("Title must not be empty."); // BR2
         }
         if (book.getAuthor() == null || book.getAuthor().trim().isEmpty()) {
-            throw new InvalidInputException("Author không được để trống."); // BR2
+            throw new InvalidInputException("Author must not be empty."); // BR2
         }
         if (book.getGenre() == null || book.getGenre().trim().isEmpty()) {
-            throw new InvalidInputException("Genre không được để trống."); // BR2
+            throw new InvalidInputException("Genre must not be empty."); // BR2
         }
         if (book.getPublicationYear() <= 0) {
-            throw new InvalidInputException("Publication year không hợp lệ.");
+            throw new InvalidInputException("Publication year is not valid.");
         }
         if (book.getQuantity() < 0) {
-            throw new InvalidInputException("Quantity không được âm.");
+            throw new InvalidInputException("Quantity must not be negative.");
         }
     }
 
-    //check id, ten, email co ban
+    //basic check for id, name, email
     public static void validateMember(Member member) throws InvalidInputException {
-        if (!member.getMemberID().matches("M\\d+$")){
-        throw new InvalidInputException("Member ID phải có định dạng M kèm số, ví dụ M001");
-                
-    }
         if (member.getMemberID() == null || member.getMemberID().trim().isEmpty()) {
-            throw new InvalidInputException("Member ID không được để trống.");
+            throw new InvalidInputException("Member ID must not be empty.");
+        }
+        if (!member.getMemberID().matches("M\\d+$")) {
+            throw new InvalidInputException("Member ID must be in the format letter M followed by digits, e.g. M001.");
         }
         if (member.getName() == null || member.getName().trim().isEmpty()) {
-            throw new InvalidInputException("Tên thành viên không được để trống.");
+            throw new InvalidInputException("Member name must not be empty.");
         }
         if (member.getEmail() != null && !member.getEmail().isEmpty()
                 && !member.getEmail().contains("@")) {
-            throw new InvalidInputException("Email không hợp lệ.");
+            throw new InvalidInputException("Email is not valid.");
         }
     }
 
-    //BR4: sach con hang, BR5: chua vuot gioi han muon
+    //BR4: book must be in stock, BR5: member must not exceed borrow limit
     public static void validateBorrow(Book book, Member member, int currentBorrowedCount)
             throws InvalidInputException {
         if (!book.isAvailable()) {
-            throw new InvalidInputException("Sách '" + book.getTitle() + "' hiện đã hết hàng."); // BR4
+            throw new InvalidInputException("Book '" + book.getTitle() + "' is currently out of stock."); // BR4
         }
         if (currentBorrowedCount >= member.getBorrowLimit()) {
             throw new InvalidInputException(
-                    "Thành viên đã đạt giới hạn mượn (" + member.getBorrowLimit() + " sách)."); // BR5
+                    "Member has reached the borrowing limit (" + member.getBorrowLimit() + " books)."); // BR5
         }
     }
 
-    //BR6: ngay muon khong duoc o tuong lai
+    //BR6: borrow date must not be in the future
     public static void validateDate(LocalDate borrowDate) throws InvalidInputException {
         if (borrowDate == null) {
-            throw new InvalidInputException("Ngày mượn không được để trống.");
+            throw new InvalidInputException("Borrow date must not be empty.");
         }
         if (borrowDate.isAfter(LocalDate.now())) {
-            throw new InvalidInputException("Ngày mượn không được ở tương lai."); // BR6
+            throw new InvalidInputException("Borrow date must not be in the future."); // BR6
         }
     }
 
     public static void validateReturnDate(LocalDate borrowDate, LocalDate returnDate)
             throws InvalidInputException {
         if (returnDate == null) {
-            throw new InvalidInputException("Ngày trả không được để trống.");
+            throw new InvalidInputException("Return date must not be empty.");
         }
         if (!returnDate.isAfter(borrowDate)) {
-            throw new InvalidInputException("Ngày trả phải sau ngày mượn."); // BR6
+            throw new InvalidInputException("Return date must be after the borrow date."); // BR6
         }
     }
 }
