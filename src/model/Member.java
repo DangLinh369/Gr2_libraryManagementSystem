@@ -8,7 +8,7 @@ public abstract class Member {
     private String email;
 
     public Member(String memberID, String name, String phone, String email) {
-        this.memberID = memberID; // BR1: gán 1 lần, không có setMemberID()
+        this.memberID = memberID; //BR1: id gan 1 lan, khong co setter
         this.name = capitalizeWords(name);
         this.phone = phone;
         this.email = email;
@@ -25,14 +25,10 @@ public abstract class Member {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    /**
-     * tiền phạt quá hạn - mỗi loại member tính khác nhau (override ở subclass).
-     */
+    //tien phat qua han - moi loai member tinh khac nhau
     public abstract double calcFine(int overdueDays);
 
-    /**
-     * số sách tối đa được mượn cùng lúc - mỗi loại member khác nhau (override ở subclass).
-     */
+    //so sach toi da duoc muon cung luc
     public abstract int getBorrowLimit();
 
     @Override
@@ -42,7 +38,7 @@ public abstract class Member {
     }
 
     public String toFileLine() {
-        // Lưu kèm loại member để khi đọc lại file biết tạo RegularMember hay PremiumMember
+        //luu kem loai member de doc file biet tao dung class con
         return getClass().getSimpleName() + "|" + memberID + "|" + name + "|" + phone + "|" + email;
     }
     

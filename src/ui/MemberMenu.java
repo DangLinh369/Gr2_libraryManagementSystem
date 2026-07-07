@@ -109,7 +109,7 @@ public class MemberMenu {
                 return;
             }
 
-            // Giữ nguyên loại thành viên cũ (Regular/Premium), chỉ thay thông tin liên hệ
+            //giu nguyen loai member cu, chi doi thong tin lien he
             Member updated = (existing instanceof PremiumMember)
                     ? new PremiumMember(id,
                         name.isEmpty() ? existing.getName() : name,
@@ -139,7 +139,7 @@ public class MemberMenu {
         }
 
         try {
-            // BR3: không xóa thành viên còn nợ sách
+            //BR3: con no sach thi khong cho xoa
             if (borrowService.countCurrentlyBorrowedByMember(id) > 0) {
                 System.out.println("=> Failed: Member still has outstanding borrowed books.");
                 return;
@@ -151,7 +151,7 @@ public class MemberMenu {
         }
     }
 
-    // Functional Requirement Member Management #4 - View All Members
+    //xem tat ca thanh vien
     private void viewAllMembers() {
         System.out.println("----------- MEMBER LIST -----------");
         List<Member> members = memberService.getAllMembers();
@@ -183,7 +183,7 @@ public class MemberMenu {
         System.out.printf(rowFormat, "ID", "Name", "Phone", "Email", "Type", "Borrowed");
         System.out.println("--------------------------------------------------------------------------");
         for (Member m : members) {
-            // m có thể là Regular hoặc Premium, lấy tên class thật ra để hiển thị cột Type
+            //lay ten class that de hien cot type
             String type = m.getClass().getSimpleName().replace("Member", "");
             System.out.printf(rowFormat,
                     m.getMemberID(), m.getName(), m.getPhone(), m.getEmail(), type,

@@ -70,7 +70,7 @@ public class MainUI {
     }
 
     private void exitAndSave() {
-        // File I/O - lưu toàn bộ dữ liệu trước khi thoát
+        //luu het du lieu truoc khi thoat
         bookService.saveToFile();
         memberService.saveToFile();
         borrowService.saveToFile();

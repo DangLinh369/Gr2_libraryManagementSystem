@@ -1,10 +1,6 @@
 package model;
 
-/**
- * RegularMember - kế thừa Member.
- * BR5: giới hạn mượn 3 sách/lần (theo SYSTEM INTERFACE mục Business Rules: "e.g., 3 books at a time").
- * BR7: phí phạt mặc định 5,000 VND/ngày trễ hạn.
- */
+//member thuong: muon toi da 3 cuon, phat 5000/ngay (BR5, BR7)
 public class RegularMember extends Member {
 
     private static final int BORROW_LIMIT = 3;

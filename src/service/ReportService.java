@@ -6,11 +6,6 @@ import model.Member;
 
 import java.util.List;
 
-/**
- * ReportService - lớp báo cáo, không tự giữ dữ liệu
- * Mọi số liệu đều xin từ BorrowService (nơi giữ danh sách giao dịch),
- * ReportMenu chỉ cần gọi các hàm get... ở đây rồi in ra.
- */
 public class ReportService {
 
     private final BorrowService borrowService;
@@ -19,27 +14,27 @@ public class ReportService {
         this.borrowService = borrowService;
     }
 
-    /**sách đang được mượn (chưa trả). */
+    //sach dang duoc muon ( chua tra )
     public List<BorrowingTransaction> getCurrentlyBorrowedTransactions() {
         return borrowService.getCurrentlyBorrowedTransactions();
     }
 
-    /**  sách trễ hạn (BR7). */
+    //sach tre han
     public List<BorrowingTransaction> getOverdueTransactions() {
         return borrowService.getOverdueTransactions();
     }
 
-    /**sách phổ biến - xếp giảm dần theo số lần mượn. */
+    //sach pho bien
     public List<Book> getPopularBooks() {
         return borrowService.getPopularBooks();
     }
 
-    /**: thành viên mượn nhiều nhất - xếp giảm dần theo tổng lượt mượn. */
+    //thanh vien muon nhieu nhat
     public List<Member> getTopBorrowingMembers() {
         return borrowService.getTopBorrowingMembers();
     }
 
-    /** Tổng số lượt mượn (kể cả đã trả) */
+    //tong so luot muon
     public int countBorrowings(String memberID) {
         return borrowService.getBorrowHistory(memberID).size();
     }

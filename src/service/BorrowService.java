@@ -12,11 +12,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
-/**
- * BorrowService - xử lý nghiệp vụ mượn/trả sách, báo cáo (Reporting).
- * Phụ thuộc vào BookService và MemberService (composition - đã thể hiện trong UML).
- * BR3, BR4, BR5, BR6, BR7, BR8, BR10 đều được áp dụng tại đây.
- */
+//nghiep vu muon tra + cac ham bao cao
 public class BorrowService {
 
     private static final String FILE_PATH = "data/transactions.txt";
@@ -64,7 +60,7 @@ public class BorrowService {
         tx.getBook().increaseQuantity(); // BR8
 
         int overdueDays = tx.getOverdueDays();
-        return tx.getMember().calcFine(overdueDays); // BR7 - đa hình theo loại Member
+        return tx.getMember().calcFine(overdueDays); // BR7 - da hinh theo loai member
     }
 
     private BorrowingTransaction findOpenTransaction(String memberID, String bookID) {
@@ -88,9 +84,7 @@ public class BorrowService {
         return count;
     }
 
-    /**
-     *  sách quá hạn (Task R1).
-     */
+    //sach tre han
     public List<BorrowingTransaction> getOverdueTransactions() {
         List<BorrowingTransaction> result = new ArrayList<>();
         for (BorrowingTransaction t : txs) {
@@ -99,9 +93,7 @@ public class BorrowService {
         return result;
     }
 
-    /**
-     * sách phổ biến nhất theo BR10 (số lần mượn nhiều nhất), Task R2.
-     */
+    //sach pho bien: dem so lan muon roi xep giam dan (BR10)
     public List<Book> getPopularBooks() {
         Map<String, Integer> countMap = new HashMap<>();
         Map<String, Book> bookMap = new HashMap<>();
@@ -117,9 +109,7 @@ public class BorrowService {
         return result;
     }
 
-    /**
-     * - lịch sử mượn của 1 thành viên.
-     */
+    //lich su muon cua 1 thanh vien
     public List<BorrowingTransaction> getBorrowHistory(String memberID) {
         List<BorrowingTransaction> result = new ArrayList<>();
         for (BorrowingTransaction t : txs) {
@@ -128,10 +118,7 @@ public class BorrowService {
         return result;
     }
 
-    /**
-     * / Reporting #1 - tất cả sách đang được mượn (chưa trả).
-     * Khác với getOverdueTransactions(): đây là tập hợp lớn hơn (bao gồm cả sách chưa quá hạn).
-     */
+    //sach dang duoc muon ( chua tra )
     public List<BorrowingTransaction> getCurrentlyBorrowedTransactions() {
         List<BorrowingTransaction> result = new ArrayList<>();
         for (BorrowingTransaction t : txs) {
@@ -140,9 +127,7 @@ public class BorrowService {
         return result;
     }
 
-    /**
-     *  thành viên mượn nhiều nhất.
-     */
+    //thanh vien muon nhieu nhat
     public List<Member> getTopBorrowingMembers() {
         Map<String, Integer> countMap = new HashMap<>();
         Map<String, Member> memberMap = new HashMap<>();

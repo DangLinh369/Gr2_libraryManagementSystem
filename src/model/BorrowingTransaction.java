@@ -14,13 +14,13 @@ public class BorrowingTransaction {
     private Member member;
     private LocalDate borrowDate;
     private LocalDate dueDate;
-    private LocalDate returnDate; // null nếu sách chưa được trả
+    private LocalDate returnDate; //null = chua tra
 
     public BorrowingTransaction(String transactionID, Book book, Member member, LocalDate borrowDate) {
         this.transactionID = transactionID;
         this.book = book;
         this.member = member;
-        this.borrowDate = borrowDate; // BR6: phải là ngày hiện tại hoặc trong quá khứ (check trước khi tạo)
+        this.borrowDate = borrowDate; //BR6: ngay muon da duoc check truoc khi tao
         this.dueDate = borrowDate.plusDays(DEFAULT_BORROW_DAYS);
         this.returnDate = null;
     }
@@ -33,7 +33,7 @@ public class BorrowingTransaction {
     public LocalDate getReturnDate() { return returnDate; }
 
     public void setReturnDate(LocalDate returnDate) {
-        // BR6: return date phải sau borrow date (validate trước khi gọi hàm này)
+        //BR6: ngay tra da duoc validate truoc khi goi
         this.returnDate = returnDate;
     }
 
@@ -42,10 +42,7 @@ public class BorrowingTransaction {
         return checkDate.isAfter(dueDate);
     }
 
-    /**
-     * Số ngày trễ hạn - dùng để tính fine (BR7) qua Member.calcFine(overdueDays).
-     * Nếu đã trả: tính theo returnDate. Nếu chưa trả: tính theo ngày hiện tại.
-     */
+    //so ngay tre: da tra thi tinh theo ngay tra, chua tra thi tinh den hom nay
     public int getOverdueDays() {
         LocalDate compareDate = (returnDate != null) ? returnDate : LocalDate.now();
         if (compareDate.isAfter(dueDate)) {

@@ -9,18 +9,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * BookService - quản lý danh sách Book (Pattern Recognition - CRUD, theo Milestone 2).
- * BR1: bookID phải unique trong toàn hệ thống (check trùng khi addBook).
- */
+//quan ly danh sach sach (CRUD + luu file)
 public class BookService {
 
     private static final String FILE_PATH = "data/books.txt";
     private ArrayList<Book> books = new ArrayList<>();
 
-    /**
-     *kiểm tra unique ID và validate dữ liệu trước khi thêm.
-     */
+    //validate roi check trung id truoc khi them
     public void addBook(Book book) throws InvalidInputException {
         DataInputValidator.validateBook(book); // BR2, BR9
         for (Book b : books) {
@@ -71,9 +66,7 @@ public class BookService {
         throw new BookNotFoundException(bookID);
     }
 
-    /**
-     * Ghi toàn bộ danh sách Book ra file text.
-     */
+    //ghi ca danh sach ra file
     public void saveToFile() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Book b : books) {
@@ -85,9 +78,7 @@ public class BookService {
         }
     }
 
-    /**
-     * Đọc danh sách Book từ file text (nếu file đã tồn tại).
-     */
+    //doc file neu co
     public void loadFromFile() {
         File file = new File(FILE_PATH);
         if (!file.exists()) return;

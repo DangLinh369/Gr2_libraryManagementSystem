@@ -1,11 +1,6 @@
 package model;
 
-/**
- * Entity Book - thể hiện Encapsulation (yêu cầu mục 5 - OOP Requirements).
- * BR1: bookID là unique, không được thay đổi sau khi tạo (không có setter cho bookID).
- * BR2: title, author, genre không được rỗng (validate ở DataInputValidator trước khi addBook).
- * BR4 + BR8: quantity (stock) được kiểm tra trước khi mượn, giảm khi mượn, tăng khi trả.
- */
+//entity sach - quantity la so ban con trong kho
 public class Book {
     private String bookID;
     private String title;
@@ -15,7 +10,7 @@ public class Book {
     private int quantity;
 
     public Book(String bookID, String title, String author, String genre, int publicationYear, int quantity) {
-        this.bookID = bookID; // BR1: gán 1 lần duy nhất tại constructor, không có setBookID()
+        this.bookID = bookID; //BR1: id gan 1 lan duy nhat
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -23,7 +18,7 @@ public class Book {
         this.quantity = quantity;
     }
 
-    // Không có setter cho bookID -> đảm bảo BR1 (unique ID không thể sửa)
+    //khong co setter cho id (BR1)
     public String getBookID() { return bookID; }
 
     public String getTitle() { return title; }
@@ -45,16 +40,12 @@ public class Book {
         return quantity > 0;
     }
 
-    /**
-     * BR8: giảm stock khi mượn sách. Gọi từ BorrowService.borrowBook().
-     */
+    //BR8: giam kho khi muon
     public void decreaseQuantity() {
         if (quantity > 0) quantity--;
     }
 
-    /**
-     * BR8: tăng stock khi trả sách. Gọi từ BorrowService.returnBook().
-     */
+    //BR8: tang kho khi tra
     public void increaseQuantity() {
         quantity++;
     }
@@ -65,10 +56,7 @@ public class Book {
                 bookID, title, author, genre, publicationYear, quantity);
     }
 
-    /**
-     * Dùng để parse 1 dòng dữ liệu đọc từ file text (file I/O - Milestone 4).
-     * Format: bookID|title|author|genre|publicationYear|quantity
-     */
+    //1 dong trong file books.txt, cach nhau dau |
     public String toFileLine() {
         return bookID + "|" + title + "|" + author + "|" + genre + "|" + publicationYear + "|" + quantity;
     }

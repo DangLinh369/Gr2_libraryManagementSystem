@@ -14,8 +14,7 @@ public class BookMenu {
     private BookService bookService;
     private Scanner scanner;
 
-    // Dùng chung 1 Scanner duy nhất với MainUI và các Menu khác để tránh
-    // lỗi mất dữ liệu khi nhiều Scanner cùng đọc System.in.
+    //dung chung 1 scanner voi MainUI de khoi loi doc input
     public BookMenu(BookService bookService, Scanner scanner) {
         this.bookService = bookService;
         this.scanner = scanner;
@@ -46,7 +45,7 @@ public class BookMenu {
         } while (choice != 0);
     }
 
-    // Task B1 - Add Book
+    //them sach
     private void addBook() {
         System.out.println("----------- ADD BOOK -----------");
         System.out.print("Book ID: ");
@@ -62,7 +61,7 @@ public class BookMenu {
         System.out.print("Quantity: ");
         int qty = readInt();
 
-        // Bước xác nhận theo đúng SYSTEM INTERFACE: "[1] Save [2] Cancel"
+        //xac nhan truoc khi luu
         System.out.print("[1] Save [2] Cancel: ");
         int confirm = readInt();
         if (confirm != 1) {
@@ -72,13 +71,13 @@ public class BookMenu {
 
         try {
             bookService.addBook(new Book(id, title, author, genre, year, qty));
-            System.out.println("Book added successfully."); // theo SYSTEM INTERFACE: "Book added successfully."
+            System.out.println("Book added successfully.");
         } catch (InvalidInputException e) {
             //System.out.println("=> Failed: " + e.getMessage());
         }
     }
 
-    // Update Book
+    //sua sach
     private void updateBook() {
         System.out.println("----------- UPDATE BOOK -----------");
         System.out.print("Enter Book ID: ");
@@ -86,7 +85,7 @@ public class BookMenu {
         try {
             Book existing = bookService.findByID(id);
 
-            // Hiển thị Current Information nhiều dòng, đúng mẫu SYSTEM INTERFACE
+            //hien thong tin hien tai
             System.out.println("Current Information:");
             System.out.println("Title: " + existing.getTitle());
             System.out.println("Author: " + existing.getAuthor());
@@ -94,11 +93,11 @@ public class BookMenu {
             System.out.println("Publication Year: " + existing.getPublicationYear());
             System.out.println("Quantity: " + existing.getQuantity());
 
-            // Theo SYSTEM INTERFACE, Task B2 chỉ cho phép cập nhật Quantity
+            //de bai chi cho sua quantity
             System.out.print("Enter new Quantity (leave blank to skip): ");
             String qtyStr = scanner.nextLine();
 
-            // Bước xác nhận: "[1] Update [2] Cancel"
+            //xac nhan
             System.out.print("[1] Update [2] Cancel: ");
             int confirm = readInt();
             if (confirm != 1) {
@@ -141,7 +140,7 @@ public class BookMenu {
         }
     }
 
-    //View All Books
+    //xem tat ca sach
     private void viewAllBooks() {
         System.out.println("----------- BOOK LIST -----------");
         List<Book> books = bookService.getAllBooks();

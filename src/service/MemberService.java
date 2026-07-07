@@ -59,7 +59,7 @@ public class MemberService {
         for (Member m : members) {
             if (m.getMemberID().equalsIgnoreCase(memberID)) return m;
         }
-        throw new MemberNotFoundException(memberID); // BR3 liên quan: dùng exception này khi borrow
+        throw new MemberNotFoundException(memberID); // BR3
     }
 
     public void saveToFile() {
@@ -84,7 +84,7 @@ public class MemberService {
                 String[] parts = line.split("\\|");
                 String type = parts[0];
                 String id = parts[1], name = parts[2], phone = parts[3], email = parts[4];
-                // Polymorphism: tạo đúng subclass dựa vào type lưu trong file
+                //tao dung class con theo type luu trong file
                 if (type.equals("PremiumMember")) {
                     members.add(new PremiumMember(id, name, phone, email));
                 } else {

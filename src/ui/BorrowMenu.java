@@ -88,7 +88,7 @@ public class BorrowMenu {
         }
 
         try {
-            // tiền phạt do chính member tự tính theo loại của nó (BR7)
+            //BR7: member tu tinh phat theo loai cua no
             double fine = borrowService.returnBook(memberID, bookID, returnDate);
             if (fine <= 0) {
                 System.out.println("Book returned successfully. No overdue fine.");
@@ -127,7 +127,7 @@ public class BorrowMenu {
     }
 
     private void printTable(List<BorrowingTransaction> list) {
-        // BorrowingTransaction.toString() đã căn cột sẵn: Txn / Book / Member / Borrow / Due / Return
+        //toString cua transaction da can cot san
         System.out.printf("%-8s %-20s %-20s %-12s %-12s %-12s%n",
                 "Txn", "Book", "Member", "Borrow", "Due", "Return");
         System.out.println("--------------------------------------------------------------------------------");

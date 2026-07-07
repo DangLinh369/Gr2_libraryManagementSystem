@@ -7,11 +7,7 @@ import java.time.LocalDate;
 
 public class DataInputValidator {
 
-    /**
-     * BR2: title, author, genre không được rỗng.
-     * BR1: bookID không được rỗng (tính duy nhất được check riêng ở BookService vì cần
-     * truy cập danh sách hiện có).
-     */
+    //BR2: field sach khong duoc rong ( check trung id nam o BookService )
     public static void validateBook(Book book) throws InvalidInputException {
         if (book.getBookID() == null || book.getBookID().trim().isEmpty()) {
             throw new InvalidInputException("Book ID không được để trống.");
@@ -33,9 +29,7 @@ public class DataInputValidator {
         }
     }
 
-    /**
-     * BR1: memberID không được rỗng. Validate cơ bản các field còn lại.
-     */
+    //check id, ten, email co ban
     public static void validateMember(Member member) throws InvalidInputException {
         if (!member.getMemberID().matches("M\\d+$")){
         throw new InvalidInputException("Member ID phải có định dạng M kèm số, ví dụ M001");
@@ -53,11 +47,7 @@ public class DataInputValidator {
         }
     }
 
-    /**
-     * BR4: sách phải available (quantity > 0).
-     * BR5: member không được mượn vượt quá borrowLimit.
-     * (BR3: member tồn tại được check tại MemberService.getMemberByID() trước khi gọi hàm này)
-     */
+    //BR4: sach con hang, BR5: chua vuot gioi han muon
     public static void validateBorrow(Book book, Member member, int currentBorrowedCount)
             throws InvalidInputException {
         if (!book.isAvailable()) {
@@ -69,9 +59,7 @@ public class DataInputValidator {
         }
     }
 
-    /**
-     * BR6: borrowDate phải <= ngày hiện tại; returnDate phải sau borrowDate.
-     */
+    //BR6: ngay muon khong duoc o tuong lai
     public static void validateDate(LocalDate borrowDate) throws InvalidInputException {
         if (borrowDate == null) {
             throw new InvalidInputException("Ngày mượn không được để trống.");

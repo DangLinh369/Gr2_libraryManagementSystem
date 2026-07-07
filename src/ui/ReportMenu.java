@@ -47,7 +47,7 @@ public class ReportMenu {
         } while (choice != 0);
     }
 
-    // Reporting #1 - danh sách sách đang được mượn (chưa trả)
+    //sach dang duoc muon ( chua tra )
     private void borrowedReport() {
         System.out.println("----------- CURRENTLY BORROWED BOOKS -----------");
         List<BorrowingTransaction> list = reportService.getCurrentlyBorrowedTransactions();
@@ -69,7 +69,7 @@ public class ReportMenu {
         scanner.nextLine();
     }
 
-    //sách trễ hạn kèm tiền phạt dự kiến
+    //sach tre han kem tien phat
     private void overdueReport() {
         System.out.println("----------- OVERDUE BOOKS -----------");
         List<BorrowingTransaction> overdue = reportService.getOverdueTransactions();
@@ -77,25 +77,23 @@ public class ReportMenu {
             System.out.println("(No overdue books)");
             return;
         }
-        // Cung 1 rowFormat cho tieu de va du lieu -> cac cot luon thang hang
         String rowFormat = "%-9s %-26s %-10s %-16s %-12s %-13s %-11s%n";
         System.out.printf(rowFormat, "Book ID", "Title", "Member ID", "Member Name",
                 "Due Date", "Days Overdue", "Fine (VND)");
-        System.out.println("--------------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------");
         for (BorrowingTransaction t : overdue) {
-            // mỗi kieu member có mức phạt riêng (BR7) nên cứ để member tự tính -> đa hình
             double fine = t.getMember().calcFine(t.getOverdueDays());
             System.out.printf(rowFormat,
                     t.getBook().getBookID(), t.getBook().getTitle(),
                     t.getMember().getMemberID(), t.getMember().getName(),
                     t.getDueDate().format(FMT), t.getOverdueDays(), (long) fine);
         }
-        System.out.println("--------------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------");
         System.out.print("Press ENTER to return...");
         scanner.nextLine();
     }
 
-    // sách phổ biến nhất (BorrowService đã xếp sẵn giảm dần)
+    //sach pho bien ( da xep san giam dan )
     private void popularReport() {
         System.out.println("----------- MOST POPULAR BOOKS -----------");
         List<Book> books = reportService.getPopularBooks();
@@ -116,7 +114,7 @@ public class ReportMenu {
         scanner.nextLine();
     }
 
-    //thành viên mượn nhiều nhất
+    //thanh vien muon nhieu nhat
     private void topMembersReport() {
         System.out.println("----------- TOP BORROWING MEMBERS -----------");
         List<Member> members = reportService.getTopBorrowingMembers();
@@ -136,10 +134,10 @@ public class ReportMenu {
         scanner.nextLine();
     }
 
-    // xuất 2 báo cáo chính ra file text để lưu lại
+    //xuat 2 bao cao chinh ra file
     private void exportReports() {
         String filename = "data/report.txt";
-        // mở file ngay trong try để Java tự đóng khi xong, khỏi lo quên close()
+        //mo file trong try de tu dong close
         try (FileWriter w = new FileWriter(filename)) {
             w.write("OVERDUE BOOKS\n");
             for (BorrowingTransaction t : reportService.getOverdueTransactions()) {
